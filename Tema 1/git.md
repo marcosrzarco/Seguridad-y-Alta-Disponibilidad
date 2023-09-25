@@ -1,8 +1,6 @@
 # Explicación del trabajo de GIT
 *Por Marcos Rivero Zarco*
 
-**Crear repostitorio local:**
-
 Lo primero que hay que hacer es crear una nueva carpeta en el escritorio y lanzar git bash desde esa carpeta o navegar hasta ese directorio usando el comando cd.
 
 Ahí iniciaremos el repositorio con un git init. Una vez iniciado configuramos nuestro nombre y email con los comandos git config user.name | user.email.
@@ -24,7 +22,7 @@ Por último voy a explicar como generar una clave público privada y usarla como
 
 Para empezar debemos abrir la interfaz gráfica de git (git GUI):
 
-[gitGUI](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.geeksforgeeks.org%2Fworking-on-git-for-gui%2F&psig=AOvVaw2LVXrrCfPEBRcb_FSwLHxc&ust=1695751408929000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCOC4tLSsxoEDFQAAAAAdAAAAABAE)
+[gitGUI](https://media.geeksforgeeks.org/wp-content/uploads/20200329195306/GitGui11.jpg)
 
 En help elegiremos la opción de mostrar ssh key. Ahora vamos a generar la clave con el botón generate key. Esta clave debemos copiarla y meternos en github.
 
