@@ -22,7 +22,7 @@ Por último voy a explicar como generar una clave público privada y usarla como
 
 Para empezar debemos abrir la interfaz gráfica de git (git GUI):
 
-[gitGUI](https://media.geeksforgeeks.org/wp-content/uploads/20200329195306/GitGui11.jpg)
+![gitGUI](https://media.geeksforgeeks.org/wp-content/uploads/20200329195306/GitGui11.jpg)
 
 En help elegiremos la opción de mostrar ssh key. Ahora vamos a generar la clave con el botón generate key. Esta clave debemos copiarla y meternos en github.
 
