@@ -1,4 +1,4 @@
-# Examen GIT
+# Examen Vagrant
 
 *Por Marcos Rivero Zarco*
 
