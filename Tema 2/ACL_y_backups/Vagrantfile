@@ -1,0 +1,45 @@
+Vagrant.configure("2") do |config|
+  
+  config.vm.define "hostb" do |hostb|
+    hostb.vm.box = "techchad2022/ubuntu2204"
+	hostb.vm.network "private_network", ip: "192.168.56.106"
+        hostb.vm.provision "shell", inline: <<-SHELL
+            hostnamectl set-hostname hostb
+			apt-get install -y tar
+			apt-get install -y restic
+			apt-get install -y rsync
+        SHELL
+  end
+
+  config.vm.define "hostc" do |hostc|
+    hostc.vm.box = "techchad2022/ubuntu2204"
+    hostc.vm.network "private_network", ip: "192.168.56.107"
+        hostc.vm.provision "shell", inline: <<-SHELL
+            hostnamectl set-hostname hostc
+			apt-get install -y tar
+			apt-get install -y restic
+			apt-get install -y rsync
+        SHELL
+  end
+  
+  config.vm.define "hosta" do |hosta|
+    hosta.vm.box = "techchad2022/ubuntu2204"
+	hosta.vm.network "private_network", ip: "192.168.56.105"
+    hosta.vm.provision "shell", inline: <<-SHELL
+            useradd -m -s /bin/bash luis
+            useradd -m -s /bin/bash pedro
+            useradd -m -s /bin/bash juan
+			apt-get install -y tar
+			apt-get install -y restic
+			apt-get install -y rsync
+            mkdir -p /home/luis/clientes
+            chmod 750 /home/luis/clientes
+            chown pedro:juan /home/luis/clientes
+            hostnamectl set-hostname hosta
+        SHELL
+	  hosta.vm.provision "shell", path: "backup.sh", privileged: true, run: "always"
+      hosta.vm.provision "shell", inline: "echo '0 7 * * * backup.sh' | crontab -"
+      hosta.vm.provision "shell", path: "restic.sh", privileged: true, run: "always"
+      hosta.vm.provision "shell", inline: "echo '0 7 * * * backup2.sh' | crontab -"
+  end
+end
