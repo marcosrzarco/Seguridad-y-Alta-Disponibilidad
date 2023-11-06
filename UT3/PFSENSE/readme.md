@@ -11,10 +11,12 @@ Seleccionamos instalar para comenzar la instalación.
 
 ![Particionado](img/Screenshot_2.png)
 
-Elijo que se particione de manera automática pues en el ejercicio no pide particionado específico y ademas con un sistema de archivos ZFS pues el UFS se ha quedado anticuado a día de hoy.
+Elijo que se particione de manera automática pues en el ejercicio no pide particionado específico y además con un sistema de archivos ZFS pues el UFS se ha quedado anticuado a día de hoy.
 
 ![Particionado](img/Screenshot_3.png)
 
 Seleccionamos el o los discos donde queremos que se realice el particionado (en este caso automático).
 
+---
+Lo último que queda es reiniciar el equipo.
 
