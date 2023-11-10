@@ -1,16 +1,31 @@
-Vagrant.configure("2") do |config|
+Vagrant.configure("2") do |config|	
 	config.vm.define "vm1" do |vm1|
-		vm1.vm.box = "mhc-cs/Ubuntu-22-04-Xfce"
-		vm1.vm.network "private_network", type: "static", ip: "192.168.30.11", virtualbox__intnet: "red_controlada"
+		vm1.vm.box = "chenhan/ubuntu-desktop-20.04"
+		vm1.vm.network "private_network", type: "static", ip:"192.168.30.10", virtualbox__intnet: "LAN"
 	end
-	
+
 	config.vm.define "vm2" do |vm2|
 		vm2.vm.box = "techchad2022/ubuntu2204"
-		vm2.vm.network "private_network", type: "dhcp", virtualbox__intnet: "red_controlada"
+		vm2.vm.network "private_network", type: "dhcp", virtualbox__intnet: "LAN"
+		vm2.vm.provision "shell", inline: <<-SHELL
+		  apt-get update
+		  apt-get install -y iptables
+		  curl -fsSL https://get.docker.com -o get-docker.sh
+		  sh get-docker.sh
+		  usermod -aG docker vagrant
+		  docker run -d -p 80:80 --name nginx-container nginx
+		  echo "<html><body><h1>Marcos Rivero Zarco</h1></body></html>" > /vagrant/index.html
+	  SHELL
 	end
 	
 	config.vm.define "vm3" do |vm3|
 		vm3.vm.box = "techchad2022/ubuntu2204"
-		vm3.vm.network "private_network", type: "dhcp", virtualbox__intnet: "red_controlada"
+		vm3.vm.network "private_network", type: "static", ip:"192.168.30.11", virtualbox__intnet: "LAN"
+		vm3.vm.provision "shell", inline: <<-SHELL
+		  apt-get update
+		  apt-get install -y ping
+		  apt-get install -y curl
+		  apt-get install -y wget
+	  SHELL
 	end
 end
