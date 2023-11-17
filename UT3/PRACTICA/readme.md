@@ -160,6 +160,17 @@ Después de toda esta configuración en L2TP, la fuente de por qué he configura
 Este es el resultado al tratar de conectarme: 
 
 ![error](img/Screenshot_17.png)
+
+---
+### iptables
+(Esta parte la he añadido fuera del plazo, tenía la captura hecha y subida a tiempo pero se me olvidó añadirlo al readme. Me diste permiso para modificarlo ahora).
+
+Para bloquear el acceso de un sistema a otro mediante iptables hay que usar el comando: iptables -A OUTPUT -d "ip del equipo" -j DROP
+
+Ejemplo:
+
+![iptables](img/Screenshot_25.png)
+
 ---
 # Fuentes:
 https://www.youtube.com/playlist?list=PLuMd8fg3qBxflEQOl0N2QKlYaUgD26Jvs
