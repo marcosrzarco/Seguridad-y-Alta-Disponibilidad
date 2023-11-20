@@ -1,6 +1,8 @@
 # DOCUMENTACIÓN TRABAJO PFSENSE
 #### *Por Marcos Rivero Zarco*
 
+![mapadered](img/mapa_red.png)
+
 ## pfSense
 
 ### Instalación
