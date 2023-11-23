@@ -115,12 +115,6 @@ Ahora voy a crear la regla para bloquear tráfico de luiscastelar.duckdns.org a 
 
 ![alias](img/Screenshot_24.png)
 
-Por último voy a crear una regla específica en un equipo utilizando iptables.
-
-![alias](img/Screenshot_25.png)
-
-Y con ese comando ya quedaría hecho.
-
 ## VPN
 Lo primero que hay que hacer es activar L2TP:
 
@@ -154,7 +148,6 @@ Por último abrimos los puertos del firewall:
 
 ![VPN](img/Screenshot_16.png)
 
----
 ### ERROR
 
 Después de toda esta configuración en L2TP, la fuente de por qué he configurado todo como lo he hecho está abajo. 
@@ -163,17 +156,60 @@ Este es el resultado al tratar de conectarme:
 
 ![error](img/Screenshot_17.png)
 
+### Wireguard
+Lo primero que hay que hacer es instalarlo en el equipo que va a funcionar como servidor y generar las claves públicas y privadas del mismo:
+
+```bash
+wg genkey | sudo tee /etc/wireguard/privatekey | wg pubkey | sudo tee /etc/wireguard/publickey
+```
+
+Después tendremos un archivo de configuración en /etc/wireguard/wg0.conf en el que tendremos que proporcionar nuestra info:
+
+**/etc/wireguard/wg0.conf** 
+```
+[Interface]
+PrivateKey = 4CnfK1+dXB+a4u19JfWE02WZMOYDPffYe81foUW8A08=
+Address = 192.168.30.250/24
+ListenPort = 51820
+
+[Peer]
+PublicKey = wKbl8ycPbfsHqQp38d32yYL8xRFDsN5Rb19cwUJcWns=
+AllowedIPs = 0.0.0.0/0
+```
+
+Por último instalaremos wireguard en los equipos clientes y seguiremos el mismo proceso (crear las claves y editar el archivo de configuración):
+
+**/etc/wireguard/client.conf**
+```
+[Interface]
+PrivateKey = ADuS0fWhjHHweQN21ct9jdfi1iDQLAcfTsqfcfNsPkM=
+Address = 192.168.30.12
+
+[Peer]
+PublicKey = wKbl8ycPbfsHqQp38d32yYL8xRFDsN5Rb19cwUJcWns=
+Endpoint = 192.168.30.250:51820
+AllowedIPs = 0.0.0.0/0
+```
+Después de configurarlo todo correctamente tanto en el servidor como en el cliente tenemos que ejecutar el siguiente comando:
+
+```
+sudo wg-quick up <wg0/client.conf>
+```
+
+(Se pondrá wg0 o client.conf según la máquina en la que estemos, primero la ejecutaremos en el server)
+
+![comprobación](image.png)
+
 ---
+
 ### iptables
-(Esta parte la he añadido fuera del plazo, tenía la captura hecha y subida a tiempo pero se me olvidó añadirlo al readme. Me diste permiso para modificarlo ahora).
+Ahora mediante iptables voy a hacer que el primer equipo de la red LAN no pueda acceder al segundo con el siguiente comando:
 
-Para bloquear el acceso de un sistema a otro mediante iptables hay que usar el comando: iptables -A OUTPUT -d "ip del equipo" -j DROP
-
-Ejemplo:
-
-![iptables](img/Screenshot_25.png)
-
+```Bash
+sudo iptables -A OUTPUT -d 192.168.30.12 -j DROP
+```
 ---
+
 # Fuentes:
 https://www.youtube.com/playlist?list=PLuMd8fg3qBxflEQOl0N2QKlYaUgD26Jvs
 
