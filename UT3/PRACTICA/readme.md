@@ -115,6 +115,12 @@ Ahora voy a crear la regla para bloquear tráfico de luiscastelar.duckdns.org a 
 
 ![alias](img/Screenshot_24.png)
 
+Algo curioso de lo que me he percatado es que con esta disposición el equipo excluido de la regla no se excluye, tiene que estar abajo del todo pues pfSense ejecuta las reglas de arriba a bajo y si primero permites que pase pero después bloqueas que lleguen los paquetes a la red LAN a la que pertenece no funciona la exclusión. Primero hay que bloquear los paquetes a la red LAN y después permitir que lleguen para el equipo excluido.
+
+Con toda esta configuración al tratar de acceder a las páginas webs vetadas este es el resultado:
+
+![firewallResultado](img/Screenshot_26.png)
+
 ## VPN
 Lo primero que hay que hacer es activar L2TP:
 
@@ -147,10 +153,6 @@ A continuación creamos la clave para todos los usuarios:
 Por último abrimos los puertos del firewall:
 
 ![VPN](img/Screenshot_16.png)
-
-Con toda esta configuración al tratar de acceder a las páginas webs vetadas este es el resultado:
-
-![VPNresultado](img/Screenshot_26.png)
 
 Se quedan ambas cargando infinitamente. (En la primera se ve youtube y un link porque he buscado en google youtube y después he clickado en un resultado en la segunda he puesto directamente la direccion luiscastelar.duckdns.org)
 
@@ -207,6 +209,7 @@ sudo wg-quick up <wg0/client.conf>
 Todo esto tampoco funciona, se que en las capturas aparece la ip 192.168.30.250 que no es la correcta pero cambiándola a la ip WAN también tengo algún error.
 
 Te dejo la documentación igualmente de ambas VPN, para dejar constancia de que lo he intentado.
+
 ---
 
 ### iptables
