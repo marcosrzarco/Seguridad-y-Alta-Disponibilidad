@@ -148,6 +148,12 @@ Por último abrimos los puertos del firewall:
 
 ![VPN](img/Screenshot_16.png)
 
+Con toda esta configuración al tratar de acceder a las páginas webs vetadas este es el resultado:
+
+![VPNresultado](img/Screenshot_26.png)
+
+Se quedan ambas cargando infinitamente. (En la primera se ve youtube y un link porque he buscado en google youtube y después he clickado en un resultado en la segunda he puesto directamente la direccion luiscastelar.duckdns.org)
+
 ### ERROR
 
 Después de toda esta configuración en L2TP, la fuente de por qué he configurado todo como lo he hecho está abajo. 
@@ -198,8 +204,9 @@ sudo wg-quick up <wg0/client.conf>
 
 (Se pondrá wg0 o client.conf según la máquina en la que estemos, primero la ejecutaremos en el server)
 
-![comprobación](image.png)
+Todo esto tampoco funciona, se que en las capturas aparece la ip 192.168.30.250 que no es la correcta pero cambiándola a la ip WAN también tengo algún error.
 
+Te dejo la documentación igualmente de ambas VPN, para dejar constancia de que lo he intentado.
 ---
 
 ### iptables
@@ -218,3 +225,5 @@ https://kinsta.com/es/blog/instalar-docker-ubuntu/
 https://fp.josedomingo.org/seguridadgs/u03/iptables.html
 
 https://www.redeszone.net/tutoriales/vpn/pfsense-configurar-servidor-vpn-l2tp-ipsec/
+
+Ayuda de bing AI.
