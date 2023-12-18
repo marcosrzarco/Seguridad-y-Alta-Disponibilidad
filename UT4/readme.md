@@ -80,6 +80,27 @@ Como tengo configurados 2 clientes me salen dos códigos qr, aquí está uno de 
 
 Ahora voy a conectarme con mi móvil a través de la app creando el túnel con el qr. Prueba de que funciona [aquí](https://youtube.com/shorts/lu9KGzLLAxI)
 
+### ZeroTier
+
+Lo primero que he hecho ha sido registrarme en ZeroTier y crear una red:
+
+![zerotierNetwork](img/Screenshot_12.png)
+
+Después me he instalado una máquina virtual que voy a usar como dispositivo final. He tenido que instalar el cliente de zerotier:
+
+```bash
+curl -s https://install.zerotier.com | sudo bash
+```
+Después he tenido que conectarme a mi red en ZeroTier a través de la network id:
+
+```bash
+sudo zerotier-cli join e5cd7a9e1ceced2b
+```
+
+Puedo comprobar que ha funcionado porque en la página de ZeroTier efectivamente aparece el dispositivo que he unido:
+
+![zerotierNetwork](img/Screenshot_13.png)
+
 ## Fuentes
 
 https://www.arsys.es/blog/instalar-fail2ban
@@ -87,6 +108,8 @@ https://www.arsys.es/blog/instalar-fail2ban
 https://www.zonasystem.com/2022/06/segundo-factor-de-autenticacion-2fa-en-conexiones-ssh.html
 
 https://www.youtube.com/watch?v=G_Pv9XEzfUY
+
+https://www.redeszone.net/tutoriales/vpn/configurar-zerotier-red-sdn-vpn-segura/
 
 Ayuda de la IA de Bing.
 
