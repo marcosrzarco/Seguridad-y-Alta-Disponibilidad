@@ -2,7 +2,7 @@
 #### *Por Marcos Rivero Zarco*
 
 ## Mapa de red del trabajo
-![mapa_de_red](./img/mapa_de_red.png)
+![mapa_de_red](./img/mapa.png)
 ---
 
 Lo primero que he tenido que hacer ha sido hostear 3 máquinas en AWS, las 3 con el puerto 80 abierto. Una de ellas es la que tiene el proxy instalado (NGINX). Dentro de /etc/nginx/nginx.conf he tenido que escribir lo siguiente en el apartado http:
