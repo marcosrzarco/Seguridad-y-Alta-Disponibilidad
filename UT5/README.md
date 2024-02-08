@@ -4,90 +4,37 @@
 ## Mapa de red del trabajo
 ![mapa_de_red](./img/mapa_de_red.png)
 ---
-Voy a explicar como he hecho el trabajo dividiendolo en diferentes pasos:
 
-## LANZAR INSTANCIA EC2 E INSTALAR PAQUETES
-Lo primero que he hecho ha sido con mi cuenta (ya creada para la práctica anterior). He lanzado una nueva instancia EC2.
+Lo primero que he tenido que hacer ha sido hostear 3 máquinas en AWS, las 3 con el puerto 80 abierto. Una de ellas es la que tiene el proxy instalado (NGINX). Dentro de /etc/nginx/nginx.conf he tenido que escribir lo siguiente en el apartado http:
 
-Después he abierto el puerto 80 para poder recibir peticiones http y que nginx las rediriga a cada uno de los docker según el subdominio al que se diriga la petición. También he instalado el paquete de nginx.
-
-Ahora me aseguraré de que el puerto 80 esté abierto para que permita el tráfico http:
-
-![regla_de_entrada](./img/Screenshot_1.png)
-
-
-## ÁRBOL DE DIRECTORIOS
-Así quedan los directorios del proyecto:
-
-/proyecto
-
-├── mriveroz
-
-│   └── index.html
-
-├── mriveroz-2
-
-│   └── index.html
-
-├── nginx
-
-│   └── conf.d
-
-│       └── mriveroz.conf
-
-│       └── mriveroz-2.conf
-
-│     
-
-└── docker-compose.yml
-
-## CONTENIDO DE LOS ARCHIVOS DE CONFIGURACIÓN
-
-Este es el contenido del .yml:
-```yml
-version: '3'
-
-services:
-  nginx:
-    image: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./mriveroz:/usr/share/nginx/html/mriveroz
-      - ./mriveroz-2:/usr/share/nginx/html/mriveroz-2
-    restart: always
 ```
-
-Este es el contenido de los .conf:
-
-mriveroz.conf
-```yml
 server {
     listen 80;
-    server_name mriveroz.duckdns.org;
+    server_name web.mriveroz.duckdns.org;
 
     location / {
-        root /usr/share/nginx/html/mriveroz;
-        index index.html;
+        proxy_pass http://35.180.0.217;
+        proxy_set_header Host $host;
+    }
+}
+
+server {
+    listen 80;
+    server_name web2.mriveroz.duckdns.org;
+
+    location / {
+        proxy_pass http://13.39.18.68;
+        proxy_set_header Host $host;
     }
 }
 ```
 
-mriveroz-2.conf
-```yml
-server {
-    listen 80;
-    server_name mriveroz2.duckdns.org;
+Estas líneas redirigen el tráfico según la url escrita a mis otras dos máquinas de aws, en caso de que escribas web te llevará a la que tiene el index.html en el que pone Hola soy la página 1 y en caso de que escribas web2 te mandará a la otra.
 
-    location / {
-        root /usr/share/nginx/html/mriveroz-2;
-        index index.html;
-    }
-}
-```
+El tráfico que tiene .mriveroz.duckdns.org se dirige a la máquina con el proxy inverso porque así lo he configurado en duckdns.
 
-Por supuesto los dos subdominios deben estar apuntando a la ip de la máquina de aws. Este es el resultado final:
+![duckdns](./img/duck.png)
 
-![prueba](./img/Screenshot_2.png)
-![prueba2](./img/Screenshot_3.png)
+Las máquinas a las que redirigo el tráfico tienen instalado un apache2. En los index he puesto frases diferenciadas para que se pueda distinguir que efectivamente son páginas distintas:
+
+![prueba](./img/prueba.png)
